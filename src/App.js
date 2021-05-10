@@ -1,83 +1,56 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
-import Form from './Components/Form';
-import ContactsList from './Components/ContactsList';
-import Filter from './Components/Filter';
-import Loader from 'react-loader-spinner';
-
-import contactsOperation from './redux/contacts/contactsOperations';
-import {
-  getLoading,
-  getContacts,
-  getError,
-} from './redux/contacts/contactsSelectors';
-
+import React, { Component, Suspense, lazy } from 'react';
+import AppBar from './Components/UserMenu/AppBar';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import './styles.css';
+import { Switch, Route } from 'react-router-dom';
+import { authOperations } from './redux/auth';
+import { connect } from 'react-redux';
+import PrivateRoute from './Components/UserMenu/PrivateRoute';
+import PublicRoute from './Components/UserMenu/PublicRoute';
+
+const HomeView = lazy(() => import('./views/HomeView'));
+const RegisterView = lazy(() => import('./views/RegisterView'));
+const LoginView = lazy(() => import('./views/LoginView'));
+const ContactsView = lazy(() => import('./views/ContactsView'));
+
 class App extends Component {
   componentDidMount() {
-    this.props.fetchContacts();
+    this.props.onGetCurrentUser();
   }
-
-  handleCheckUniqueContact = name => {
-    const { contacts } = this.props;
-    const check = contacts.find(contact => {
-      return contact.name === name;
-    });
-    if (check) {
-      alert('Contact is already exist');
-      return check;
-    }
-  };
 
   render() {
     return (
-      <CSSTransition
-        in={true}
-        appear={true}
-        classNames="scale"
-        timeout={500}
-        unmountOnExit
-      >
-        <div className="app">
-          <CSSTransition
-            in={true}
-            appear={true}
-            classNames="fade"
-            timeout={2000}
-            unmountOnExit
-          >
-            <h1 className="title">Phonebook</h1>
-          </CSSTransition>
-          <Form onCheckUnique={this.handleCheckUniqueContact} />
-
-          {this.props.contacts.length > 0 && <Filter />}
-          {this.props.isLoading && (
-            <Loader
-              className="loader"
-              type="TailSpin"
-              color="cornflowerblue"
-              height={50}
-              width={50}
+      <div>
+        <AppBar />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <PublicRoute
+              path="/register"
+              component={RegisterView}
+              restricted
+              redirectTo="/contacts"
             />
-          )}
-          {this.props.error && (
-            <p className="error-message">{this.props.error.message}</p>
-          )}
-          <ContactsList />
-        </div>
-      </CSSTransition>
+            <PublicRoute
+              path="/login"
+              component={LoginView}
+              restricted
+              redirectTo="/contacts"
+            />
+            <PrivateRoute
+              path="/contacts"
+              component={ContactsView}
+              redirectTo="/login"
+            />
+          </Switch>
+        </Suspense>
+      </div>
     );
   }
 }
-const mapStateToProps = state => ({
-  contacts: getContacts(state),
-  isLoading: getLoading(state),
-  error: getError(state),
-});
-const mapDispatchToProps = dispatch => ({
-  fetchContacts: () => dispatch(contactsOperation.fetchContacts()),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+const mapDispatchToProps = {
+  onGetCurrentUser: authOperations.getCurrentUser,
+};
+
+export default connect(null, mapDispatchToProps)(App);
