@@ -30,42 +30,36 @@ class ContactsView extends Component {
 
   render() {
     return (
-      <div>
-        <CSSTransition
-          in={true}
-          appear={true}
-          classNames="scale"
-          timeout={500}
-          unmountOnExit
-        >
-          <div className="app">
-            <CSSTransition
-              in={true}
-              appear={true}
-              classNames="fade"
-              timeout={2000}
-              unmountOnExit
-            >
-              <h1 className="title">Phonebook</h1>
-            </CSSTransition>
-            <Form onCheckUnique={this.handleCheckUniqueContact} />
+      <div className="app">
+        <div className="phone-form">
+          <CSSTransition
+            in={true}
+            appear={true}
+            classNames="fade"
+            timeout={2000}
+            unmountOnExit
+          >
+            <h1 className="title">Phonebook</h1>
+          </CSSTransition>
+          <Form onCheckUnique={this.handleCheckUniqueContact} />
+          {this.props.contacts.length > 0 && <Filter />}
+        </div>
 
-            {this.props.contacts.length > 0 && <Filter />}
-            {this.props.isLoading && (
-              <Loader
-                className="loader"
-                type="TailSpin"
-                color="cornflowerblue"
-                height={50}
-                width={50}
-              />
-            )}
-            {this.props.error && (
-              <p className="error-message">{this.props.error.message}</p>
-            )}
-            <ContactsList />
-          </div>
-        </CSSTransition>
+        <div>
+          {this.props.isLoading && (
+            <Loader
+              className="loader"
+              type="TailSpin"
+              color="cornflowerblue"
+              height={50}
+              width={50}
+            />
+          )}
+          {this.props.error && (
+            <p className="error-message">{this.props.error.message}</p>
+          )}
+          <ContactsList />
+        </div>
       </div>
     );
   }

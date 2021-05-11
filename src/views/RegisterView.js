@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../redux/auth';
+import PersonIcon from '@material-ui/icons/Person';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { LoginButton, LoginForm, Label, Span, Input } from './LoginView';
+import { authSelectors } from '../redux/auth';
 
 class RegisterView extends Component {
   state = {
@@ -23,43 +28,56 @@ class RegisterView extends Component {
     const { email, password, name } = this.state;
     return (
       <div>
-        <form onSubmit={this.handleSubmit} autoComplete="off">
-          <label>
-            Ім'я
-            <input
+        <LoginForm onSubmit={this.handleSubmit} autoComplete="off">
+          <h2>Registration</h2>
+          <Label>
+            <Span>
+              <PersonIcon />
+              Name{' '}
+            </Span>
+            <Input
               type="text"
               name="name"
               value={name}
               onChange={this.handleChange}
             />
-          </label>
-          <label>
-            Пошта
-            <input
+          </Label>
+          <Label>
+            <Span>
+              <MailOutlineIcon />
+              Email
+            </Span>
+            <Input
               type="email"
               name="email"
               value={email}
               onChange={this.handleChange}
             />
-          </label>
-          <label>
-            Пароль
-            <input
+          </Label>
+          <Label>
+            <Span>
+              <LockOpenIcon />
+              Password
+            </Span>
+            <Input
               type="password"
               name="password"
               value={password}
               onChange={this.handleChange}
             />
-          </label>
-          <button type="submit">Зареєструватися</button>
-        </form>
+          </Label>
+          {this.props.error && <p>Registration error, please try again</p>}
+          <LoginButton type="submit">Register</LoginButton>
+        </LoginForm>
       </div>
     );
   }
 }
-
+const mapStateToProps = state => ({
+  error: authSelectors.getError(state),
+});
 const mapDispatchToProps = {
   onRegister: authOperations.register,
 };
 
-export default connect(null, mapDispatchToProps)(RegisterView);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);

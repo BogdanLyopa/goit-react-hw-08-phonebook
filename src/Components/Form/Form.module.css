@@ -21,11 +21,13 @@
 
 .label {
   font-size: 20px;
-  color: #062d6b;
+  color: rgb(188, 171, 188);
   font-weight: 700;
-  display: flex;
+  /* display: flex; */
+  align-items: center;
   flex-direction: column;
   margin-bottom: 10px;
+  font-family: 'Itim', cursive;
 }
 
 .label input {

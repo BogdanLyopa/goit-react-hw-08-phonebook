@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://BogdanLyopa.github.io/goit-react-hw-08-phonebook",
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
@@ -21,6 +22,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
+    "styled-components": "^5.3.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.1"
   },

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Form.module.css';
-
 import contactsOperations from '../../redux/contacts/contactsOperations';
 
 export class Form extends Component {

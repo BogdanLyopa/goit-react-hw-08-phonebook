@@ -1,3 +1,9 @@
+body {
+  font-family: 'Itim', cursive;
+  background-color: #3f0e40;
+  color: #fff;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -5,18 +11,22 @@ ul {
 }
 
 .app {
-  border: 1px solid gray;
+  border: 10px solid rgb(82, 38, 83);
   width: 400px;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
+  /* padding: 20px; */
+}
+.phone-form {
   padding: 20px;
 }
-
 .title {
   text-align: center;
-  color: cornflowerblue;
+  font-family: 'Itim', cursive;
+
+  color: #fff;
 }
 .loader {
   text-align: center;

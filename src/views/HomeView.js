@@ -1,7 +1,7 @@
 const HomeView = () => {
   return (
     <div>
-      <h1>HomePage</h1>
+      <h1 className="title">Phonebook</h1>
     </div>
   );
 };

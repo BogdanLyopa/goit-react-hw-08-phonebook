@@ -1,4 +1,6 @@
 .button {
+  display: flex;
+  align-items: center;
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -20,18 +22,17 @@
   padding: 5px;
   display: flex;
   justify-content: space-between;
+  color: rgb(188, 171, 188);
 }
 
 .item:hover {
-  background-color: cornflowerblue;
-  cursor: pointer;
-  color: white;
+  background-color: #350d36;
+  color: #fff;
 }
 
 .name {
   font-weight: 700;
   font-size: 18px;
-  color: #062d6b;
 }
 
 .item-fade-enter {
